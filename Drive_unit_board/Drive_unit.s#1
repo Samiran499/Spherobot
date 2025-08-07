@@ -882,7 +882,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 </class>
 </classes>
 <parts>
-<part name="SPHERO_DRIVE" library="RASPBERRY_PI_PICO" deviceset="RASPBERRY_PI_PICO" device=""/>
+<part name="U1" library="RASPBERRY_PI_PICO" deviceset="RASPBERRY_PI_PICO" device=""/>
 <part name="U$1" library="USB_BUCK" deviceset="USB_BUCK" device=""/>
 <part name="CON1" library="jst" deviceset="B4B-ZR" device=""/>
 <part name="MOTOR1" library="jst" deviceset="B6B-ZR" device=""/>
@@ -903,7 +903,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <plain>
 </plain>
 <instances>
-<instance part="SPHERO_DRIVE" gate="G$1" x="58.42" y="45.72" smashed="yes"/>
+<instance part="U1" gate="G$1" x="58.42" y="45.72" smashed="yes"/>
 <instance part="U$1" gate="G$1" x="20.32" y="134.62" smashed="yes"/>
 <instance part="CON1" gate="G$1" x="-81.28" y="142.24" smashed="yes" rot="R180">
 <attribute name="NAME" x="-78.74" y="136.398" size="1.27" layer="95" rot="R180"/>
@@ -987,7 +987,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 </net>
 <net name="GND" class="0">
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GND"/>
+<pinref part="U1" gate="G$1" pin="GND"/>
 <wire x1="73.66" y1="60.96" x2="76.2" y2="60.96" width="0.1524" layer="91"/>
 <label x="76.2" y="60.96" size="1.778" layer="95" xref="yes"/>
 </segment>
@@ -1032,32 +1032,32 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="-33.02" y="60.96" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GND2"/>
+<pinref part="U1" gate="G$1" pin="GND2"/>
 <wire x1="73.66" y1="35.56" x2="76.2" y2="35.56" width="0.1524" layer="91"/>
 <label x="76.2" y="35.56" size="1.4224" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GND3"/>
+<pinref part="U1" gate="G$1" pin="GND3"/>
 <wire x1="73.66" y1="22.86" x2="76.2" y2="22.86" width="0.1524" layer="91"/>
 <label x="76.2" y="22.86" size="1.4224" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GND7"/>
+<pinref part="U1" gate="G$1" pin="GND7"/>
 <wire x1="48.26" y1="22.86" x2="45.72" y2="22.86" width="0.1524" layer="91"/>
 <label x="45.72" y="22.86" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GND6"/>
+<pinref part="U1" gate="G$1" pin="GND6"/>
 <wire x1="48.26" y1="35.56" x2="45.72" y2="35.56" width="0.1524" layer="91"/>
 <label x="45.72" y="35.56" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GND4"/>
+<pinref part="U1" gate="G$1" pin="GND4"/>
 <wire x1="48.26" y1="60.96" x2="45.72" y2="60.96" width="0.1524" layer="91"/>
 <label x="45.72" y="60.96" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GND5"/>
+<pinref part="U1" gate="G$1" pin="GND5"/>
 <wire x1="48.26" y1="48.26" x2="45.72" y2="48.26" width="0.1524" layer="91"/>
 <label x="45.72" y="48.26" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -1084,7 +1084,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 </net>
 <net name="5V" class="0">
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="VSYS"/>
+<pinref part="U1" gate="G$1" pin="VSYS"/>
 <wire x1="73.66" y1="63.5" x2="76.2" y2="63.5" width="0.1524" layer="91"/>
 <label x="76.2" y="63.5" size="1.778" layer="95" xref="yes"/>
 </segment>
@@ -1139,7 +1139,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="116.84" y="76.2" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP9"/>
+<pinref part="U1" gate="G$1" pin="GP9"/>
 <wire x1="48.26" y1="38.1" x2="45.72" y2="38.1" width="0.1524" layer="91"/>
 <label x="45.72" y="38.1" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -1151,7 +1151,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="116.84" y="73.66" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP10"/>
+<pinref part="U1" gate="G$1" pin="GP10"/>
 <wire x1="48.26" y1="33.02" x2="45.72" y2="33.02" width="0.1524" layer="91"/>
 <label x="45.72" y="33.02" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -1187,7 +1187,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="116.84" y="53.34" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP11"/>
+<pinref part="U1" gate="G$1" pin="GP11"/>
 <wire x1="48.26" y1="30.48" x2="45.72" y2="30.48" width="0.1524" layer="91"/>
 <label x="45.72" y="30.48" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -1199,7 +1199,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="116.84" y="50.8" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP12"/>
+<pinref part="U1" gate="G$1" pin="GP12"/>
 <wire x1="48.26" y1="27.94" x2="45.72" y2="27.94" width="0.1524" layer="91"/>
 <label x="45.72" y="27.94" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -1235,7 +1235,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="116.84" y="30.48" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP13"/>
+<pinref part="U1" gate="G$1" pin="GP13"/>
 <wire x1="48.26" y1="25.4" x2="45.72" y2="25.4" width="0.1524" layer="91"/>
 <label x="45.72" y="25.4" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -1247,7 +1247,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="116.84" y="27.94" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP14"/>
+<pinref part="U1" gate="G$1" pin="GP14"/>
 <wire x1="48.26" y1="20.32" x2="45.72" y2="20.32" width="0.1524" layer="91"/>
 <label x="45.72" y="20.32" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -1285,7 +1285,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="101.6" y="-27.94" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP6"/>
+<pinref part="U1" gate="G$1" pin="GP6"/>
 <wire x1="48.26" y1="45.72" x2="45.72" y2="45.72" width="0.1524" layer="91"/>
 <label x="45.72" y="45.72" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -1297,7 +1297,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="101.6" y="-30.48" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP7"/>
+<pinref part="U1" gate="G$1" pin="GP7"/>
 <wire x1="48.26" y1="43.18" x2="45.72" y2="43.18" width="0.1524" layer="91"/>
 <label x="45.72" y="43.18" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -1309,7 +1309,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="101.6" y="-35.56" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP20"/>
+<pinref part="U1" gate="G$1" pin="GP20"/>
 <wire x1="73.66" y1="30.48" x2="76.2" y2="30.48" width="0.1524" layer="91"/>
 <label x="76.2" y="30.48" size="1.4224" layer="95" xref="yes"/>
 </segment>
@@ -1321,7 +1321,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="101.6" y="-38.1" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP21"/>
+<pinref part="U1" gate="G$1" pin="GP21"/>
 <wire x1="73.66" y1="33.02" x2="76.2" y2="33.02" width="0.1524" layer="91"/>
 <label x="76.2" y="33.02" size="1.4224" layer="95" xref="yes"/>
 </segment>
@@ -1333,7 +1333,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="101.6" y="-40.64" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP18"/>
+<pinref part="U1" gate="G$1" pin="GP18"/>
 <wire x1="73.66" y1="25.4" x2="76.2" y2="25.4" width="0.1524" layer="91"/>
 <label x="76.2" y="25.4" size="1.4224" layer="95" xref="yes"/>
 </segment>
@@ -1345,7 +1345,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="101.6" y="-43.18" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP19"/>
+<pinref part="U1" gate="G$1" pin="GP19"/>
 <wire x1="73.66" y1="27.94" x2="76.2" y2="27.94" width="0.1524" layer="91"/>
 <label x="76.2" y="27.94" size="1.4224" layer="95" xref="yes"/>
 </segment>
@@ -1357,7 +1357,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="187.96" y="-30.48" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP8"/>
+<pinref part="U1" gate="G$1" pin="GP8"/>
 <wire x1="48.26" y1="40.64" x2="45.72" y2="40.64" width="0.1524" layer="91"/>
 <label x="45.72" y="40.64" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -1369,7 +1369,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="187.96" y="-38.1" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP16"/>
+<pinref part="U1" gate="G$1" pin="GP16"/>
 <wire x1="73.66" y1="17.78" x2="76.2" y2="17.78" width="0.1524" layer="91"/>
 <label x="76.2" y="17.78" size="1.4224" layer="95" xref="yes"/>
 </segment>
@@ -1381,7 +1381,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="187.96" y="-40.64" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP17"/>
+<pinref part="U1" gate="G$1" pin="GP17"/>
 <wire x1="73.66" y1="20.32" x2="76.2" y2="20.32" width="0.1524" layer="91"/>
 <label x="76.2" y="20.32" size="1.4224" layer="95" xref="yes"/>
 </segment>
@@ -1400,7 +1400,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="116.84" y="139.7" size="1.4224" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP2"/>
+<pinref part="U1" gate="G$1" pin="GP2"/>
 <wire x1="48.26" y1="58.42" x2="43.18" y2="58.42" width="0.1524" layer="91"/>
 <label x="43.18" y="58.42" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -1424,7 +1424,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="-33.02" y="68.58" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP4"/>
+<pinref part="U1" gate="G$1" pin="GP4"/>
 <wire x1="48.26" y1="53.34" x2="45.72" y2="53.34" width="0.1524" layer="91"/>
 <label x="45.72" y="53.34" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -1436,7 +1436,7 @@ Source: &lt;a href="http://www.jst-mfg.com/product/pdf/eng/eZH.pdf"&gt;http://ww
 <label x="-33.02" y="66.04" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="SPHERO_DRIVE" gate="G$1" pin="GP5"/>
+<pinref part="U1" gate="G$1" pin="GP5"/>
 <wire x1="48.26" y1="50.8" x2="45.72" y2="50.8" width="0.1524" layer="91"/>
 <label x="45.72" y="50.8" size="1.4224" layer="95" rot="R180" xref="yes"/>
 </segment>

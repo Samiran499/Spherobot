@@ -4,8 +4,8 @@
 #define ENCA1 9
 #define ENCB1 10
 #define PWM1 6
-#define IN11 16
-#define IN12 17
+#define IN11 20
+#define IN12 21
 
 // Motor 2 Pins
 #define ENCA2 11
@@ -15,11 +15,11 @@
 #define IN22 19
 
 // Motor 3 Pins
-// #define ENCA3 13
-// #define ENCB3 14
-// #define PWM3 8
-// #define IN31 20
-// #define IN32 21
+#define ENCA3 13
+#define ENCB3 14
+#define PWM3 8
+#define IN31 16
+#define IN32 17
 
 // Number of motors
 #define NUM_MOTORS 3
@@ -53,7 +53,7 @@ typedef struct {
 Motor motors[NUM_MOTORS] = {
   {ENCA1, ENCB1, PWM1, IN11, IN12, 0, 0, 0, 0, 0, 0, 0, 0, 30, 5, 0.1}, // Motor 1
   {ENCA2, ENCB2, PWM2, IN21, IN22, 0, 0, 0, 0, 0, 0, 0, 0, 30, 5, 0.1}, // Motor 2
-  //{ENCA3, ENCB3, PWM3, IN31, IN32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}  // Motor 3
+  {ENCA3, ENCB3, PWM3, IN31, IN32, 0, 0, 0, 0, 0, 0, 0, 0, 30, 5, 0.1}  // Motor 3
 };
 
 // Timing variables
@@ -86,8 +86,16 @@ void handleEncoderInterrupt(int motorIndex) {
 void parseTargetSpeeds(char* buffer) {
   char* token = strtok(buffer, ",");
   for (int i = 0; i < NUM_MOTORS && token != NULL; i++) {
-    motors[i].vt = atof(token);
+    float speed = atof(token);
+    if (speed == 0 && token[0] != '0') { // Check for invalid conversion
+      Serial.println("Error: Invalid speed value");
+      return;
+    }
+    motors[i].vt = speed;
     token = strtok(NULL, ",");
+  }
+  if (token != NULL) {
+    Serial.println("Error: Too many values in UART data");
   }
 }
 
@@ -122,9 +130,6 @@ void setMotor(int dir, int pwmVal, int pwm, int in1, int in2) {
 }
 
 void setup() {
-  Serial.begin(115200);  // USB serial for debugging
-  Serial1.begin(115200); // UART1 for target speed communication
-  
   // Initialize all motors
   for (int i = 0; i < NUM_MOTORS; i++) {
     pinMode(motors[i].encA, INPUT);
@@ -145,8 +150,19 @@ void setup() {
   // Attach interrupts for each encoder
   attachInterrupt(digitalPinToInterrupt(ENCA1), readEncoder1, RISING);
   attachInterrupt(digitalPinToInterrupt(ENCA2), readEncoder2, RISING);
-  //attachInterrupt(digitalPinToInterrupt(ENCA3), readEncoder3, RISING);
+  attachInterrupt(digitalPinToInterrupt(ENCA3), readEncoder3, RISING);
   pinMode(25, OUTPUT);
+  Serial.begin(115200);  // USB serial for debugging
+  Serial1.begin(115200); // UART1 for target speed communication
+  
+  // while(!Serial1.available())
+  // {
+  //   digitalWrite(25, HIGH);
+  //   delay(100);
+  //   digitalWrite(25, LOW);
+  //   delay(100);
+  // }
+
   digitalWrite(25, HIGH);
 }
 
@@ -155,16 +171,21 @@ void loop() {
   long currT = micros();
   float deltaT = ((float)(currT - prevT)) / 1.0e6;
   prevT = currT;
-  
+
   // Process UART data if available
   while (Serial1.available()) {
     char c = Serial1.read();
     if (c == '\n') {
       uartBuffer[bufferIndex] = '\0';
+      Serial.print("Received UART data: ");
+      Serial.println(uartBuffer); // Debugging: Print received data
       parseTargetSpeeds(uartBuffer);
       bufferIndex = 0;
     } else if (bufferIndex < sizeof(uartBuffer) - 1) {
       uartBuffer[bufferIndex++] = c;
+    } else {
+      Serial.println("Error: UART buffer overflow");
+      bufferIndex = 0; // Reset buffer to prevent overflow
     }
   }
   
@@ -205,7 +226,7 @@ void loop() {
   }
   
   // Send actual speeds via UART1
-  sendActualSpeeds();
+  // sendActualSpeeds();
   
   // Small delay to prevent USB serial flooding
   delay(1);

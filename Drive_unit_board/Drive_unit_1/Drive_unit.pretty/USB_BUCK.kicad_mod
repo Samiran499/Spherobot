@@ -1,0 +1,152 @@
+(footprint "USB_BUCK"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(uuid "7635ac9a-e36d-4fc0-af63-7a4fbb2e4928")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "1f5a61e3-5657-4571-bdfa-d7747e7f4e7b")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "ba40ec57-7b9b-4c99-9705-8dfdc6dcfecb")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "98cf85de-6c10-452b-b68b-ef2066eb4d75")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_line
+		(start 0 -17)
+		(end 32 -17)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "beda0410-aa66-43b6-ad0c-664c3bd9edb2")
+	)
+	(fp_line
+		(start 0 0)
+		(end 0 -17)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "70d5d8e1-1f1b-4a29-8b3f-1d21e284c490")
+	)
+	(fp_line
+		(start 32 -17)
+		(end 32 0)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "0e3c5283-cfeb-4e5e-8472-abaeadb71531")
+	)
+	(fp_line
+		(start 32 0)
+		(end 0 0)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "a6e4ba8a-3162-423e-a3c9-f1176759f325")
+	)
+	(fp_text user "IN+"
+		(at 3.937 -1.397 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "0661db03-5730-4e29-a4aa-86c580069c4b")
+		(effects
+			(font
+				(size 1.1684 1.1684)
+				(thickness 0.1016)
+			)
+			(justify left bottom)
+		)
+	)
+	(fp_text user "IN-"
+		(at 3.937 -14.478 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "630e7af6-5198-4681-b1a1-55eb5519ac07")
+		(effects
+			(font
+				(size 1.1684 1.1684)
+				(thickness 0.1016)
+			)
+			(justify left bottom)
+		)
+	)
+	(fp_text user "USB_BUCK"
+		(at 9 -8 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "dba85dcd-cbf3-4437-9780-c85ed4f53554")
+		(effects
+			(font
+				(size 1.1684 1.1684)
+				(thickness 0.1016)
+			)
+			(justify left bottom)
+		)
+	)
+	(pad "IN+" thru_hole circle
+		(at 2 -2)
+		(size 2.1844 2.1844)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.1016)
+		(thermal_bridge_angle 0)
+		(uuid "c5f6588e-bbaf-4b8c-b0d4-33105ae9041b")
+	)
+	(pad "IN-" thru_hole circle
+		(at 2 -15)
+		(size 2.1844 2.1844)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.1016)
+		(thermal_bridge_angle 0)
+		(uuid "46c8fd9f-bd67-4080-abd0-44be4a17a9d7")
+	)
+	(embedded_fonts no)
+)

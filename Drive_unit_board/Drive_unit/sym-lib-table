@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 0)
+  (lib (name "Drive_unit-eagle-import")(type "KiCad")(uri "${KIPRJMOD}/Drive_unit-eagle-import.kicad_sym")(options "")(descr ""))
+)
