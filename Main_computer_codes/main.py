@@ -17,6 +17,8 @@ TIMEOUT = config.getfloat('uart', 'timeout')
 CONTROL_FREQUENCY = config.getint('control', 'frequency')
 REQUEST_TIMEOUT = config.getfloat('orientation_server', 'timeout')
 MAX_FAILED_REQUESTS = config.getint('control', 'max_failed_requests')
+RPM_SCALE_FACTOR = config.getfloat('control', 'rpm_scale_factor')
+MAX_RPM = config.getfloat('control', 'max_rpm')
 LOG_INTERVAL = config.getint('logging', 'log_interval')
 DEBUG_MODE = config.getboolean('logging', 'debug_mode')
 CSV_FILENAME = config.get('logging', 'csv_filename')
@@ -62,6 +64,17 @@ def main():
 
                 # Map to motor speeds
                 m1, m2, m3 = map_speed(roll_rate, pitch_rate, yaw_rate)
+                
+                # Scale to RPM (adjust this multiplier based on your system)
+                # The kinematics output is in rad/s, convert to RPM with appropriate scaling
+                m1_rpm = m1 * RPM_SCALE_FACTOR
+                m2_rpm = m2 * RPM_SCALE_FACTOR  
+                m3_rpm = m3 * RPM_SCALE_FACTOR
+                
+                # Limit maximum RPM to prevent motor damage
+                m1_rpm = max(-MAX_RPM, min(MAX_RPM, m1_rpm))
+                m2_rpm = max(-MAX_RPM, min(MAX_RPM, m2_rpm))
+                m3_rpm = max(-MAX_RPM, min(MAX_RPM, m3_rpm))
 
                 # Check UART connection before sending
                 if not check_uart_connection(uart):
@@ -74,9 +87,9 @@ def main():
                         continue
 
                 # Send to Pico
-                if send_speeds(uart, m1, m2, m3, debug_mode):
+                if send_speeds(uart, m1_rpm, m2_rpm, m3_rpm, debug_mode):
                     if debug_mode:
-                        print(f"Successfully sent speeds: M1={m1:.2f}, M2={m2:.2f}, M3={m3:.2f}")
+                        print(f"Successfully sent speeds: M1={m1_rpm:.2f}, M2={m2_rpm:.2f}, M3={m3_rpm:.2f} RPM")
                 else:
                     print("Failed to send speeds to Pico")
 
@@ -86,9 +99,9 @@ def main():
                     "roll": data["roll"],
                     "pitch": data["pitch"],
                     "yaw": data["yaw"],
-                    "m1_speed": m1,
-                    "m2_speed": m2,
-                    "m3_speed": m3
+                    "m1_speed": m1_rpm,
+                    "m2_speed": m2_rpm,
+                    "m3_speed": m3_rpm
                 })
                 
                 # Reset failed request counter on successful operation

@@ -26,7 +26,9 @@ def load_config(config_file="config.ini"):
         },
         'control': {
             'frequency': '60',
-            'max_failed_requests': '5'
+            'max_failed_requests': '5',
+            'rpm_scale_factor': '9.55',
+            'max_rpm': '100'
         },
         'logging': {
             'log_interval': '100',
@@ -66,6 +68,8 @@ def print_config(config):
     print(f"UART Port: {config.get('uart', 'port')}")
     print(f"UART Baud Rate: {config.getint('uart', 'baud_rate')}")
     print(f"Control Frequency: {config.getint('control', 'frequency')} Hz")
+    print(f"RPM Scale Factor: {config.getfloat('control', 'rpm_scale_factor')}")
+    print(f"Max RPM: {config.getfloat('control', 'max_rpm')}")
     print(f"Debug Mode: {config.getboolean('logging', 'debug_mode')}")
     print("=" * 30)
 

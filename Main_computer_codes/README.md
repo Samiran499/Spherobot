@@ -10,7 +10,14 @@ Before running the main program, test the UART communication:
 python test_uart.py
 ```
 
-### 7. Run the Main Program
+### 7. Run Motor Diagnostics (Recommended)
+To correlate with the Pico code and ensure proper motor operation:
+```bash
+python motor_diagnostics.py
+```
+This will test individual motors, RPM levels, directions, and help identify the minimum working RPM.
+
+### 8. Run the Main Program
 ```bash
 python main.py
 ```
@@ -31,6 +38,7 @@ All settings can be modified in `config.ini`:
 - `src/config_loader.py`: Configuration file loader utility
 - `src/kinematics_mapping.py`: Converts orientation data to motor speeds using kinematic equations
 - `src/speed_uart.py`: UART communication functions for sending data to the Pico
+- `motor_diagnostics.py`: Comprehensive motor testing script that correlates with Pico code
 - `test_uart.py`: Test script to verify UART communication
 - `check_hardware.py`: Hardware setup verification script
 - `requirements.txt`: Python dependenciesuses the hardware UART (`/dev/serial0`) to communicate with the RPi Pico. Make sure UART is enabled:
@@ -116,8 +124,19 @@ No code modification required!
 
 ## Motor Communication
 
-Motor speeds are sent as comma-separated values in the format: `m1,m2,m3\n`
-Example: `10.50,-5.25,0.00\n`
+Motor speeds are sent as comma-separated RPM values in the format: `m1,m2,m3\n`
+Example: `25.50,-30.25,0.00\n`
+
+**Important**: 
+- The Pico expects RPM values, not raw speed values
+- Minimum RPM: ~20 to avoid motor stalling
+- Maximum RPM: 100 (configurable in config.ini)
+- The system automatically scales orientation data to appropriate RPM values
+
+**Pico Code Correlation**:
+- Target speeds set in `motors[i].vt` (Pico line ~101)
+- PID control with kp=5.0, ki=10.0, kd=0.1 (Pico lines ~148-150)
+- Encoder feedback via interrupts (Pico lines ~78-87)
 
 **Note**: The system currently only sends speeds to the Pico and does not receive feedback. This simplifies communication and reduces latency.
 

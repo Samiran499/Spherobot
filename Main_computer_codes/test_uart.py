@@ -40,47 +40,69 @@ def test_uart_communication():
                 print(f"  Failed to send zero speeds (attempt {i+1})")
             time.sleep(1)
         
-        # Test 2: Send different speeds
-        print("\nTest 2: Sending test speeds...")
+        # Test 2: Send different speeds (in RPM - minimum 20 RPM to avoid stalling)
+        print("\nTest 2: Sending test speeds (RPM values)...")
         test_speeds = [
-            (10, 0, 0),
-            (0, 10, 0),
-            (0, 0, 10),
-            (5, 5, 5),
-            (-5, -5, -5)
+            (30, 0, 0),    # Motor 1: 30 RPM
+            (0, 30, 0),    # Motor 2: 30 RPM  
+            (0, 0, 30),    # Motor 3: 30 RPM
+            (25, 25, 25),  # All motors: 25 RPM
+            (-25, -25, -25), # All motors: -25 RPM (reverse)
+            (50, -30, 20)  # Mixed speeds
         ]
         
         for i, (m1, m2, m3) in enumerate(test_speeds):
-            print(f"  Sending speeds: M1={m1}, M2={m2}, M3={m3}")
+            print(f"  Sending speeds: M1={m1} RPM, M2={m2} RPM, M3={m3} RPM")
             if send_speeds(uart, m1, m2, m3, True):
                 print(f"  Successfully sent test speeds")
-                time.sleep(0.5)
+                time.sleep(1.0)  # Give motors time to reach target speed
             else:
                 print(f"  Failed to send test speeds")
-            time.sleep(2)
+            time.sleep(3)  # Wait longer to observe motor behavior
         
-        # Test 3: Continuous communication test
-        print("\nTest 3: Continuous communication (10 seconds)...")
+        # Test 2.5: Step RPM test to find minimum working speed
+        print("\nTest 2.5: Step RPM test (finding minimum speed)...")
+        step_speeds = [5, 10, 15, 20, 25, 30, 40, 50]
+        
+        for rpm in step_speeds:
+            print(f"  Testing {rpm} RPM on all motors...")
+            if send_speeds(uart, rpm, rpm, rpm, True):
+                print(f"  Command sent successfully - observe motors for {rpm} RPM")
+                time.sleep(4)  # Give time to observe each speed level
+            else:
+                print(f"  Failed to send {rpm} RPM command")
+        
+        # Stop after step test
+        print("  Stopping motors after step test...")
+        send_speeds(uart, 0, 0, 0, True)
+        time.sleep(2)
+        
+        # Test 3: Continuous communication test with varying RPM
+        print("\nTest 3: Continuous communication with sinusoidal RPM (20 seconds)...")
         start_time = time.time()
         counter = 0
         
-        while time.time() - start_time < 10:
-            # Send sinusoidal speeds for testing
+        while time.time() - start_time < 20:  # Extended to 20 seconds
+            # Send sinusoidal speeds for testing (amplitude 30 RPM, offset 0)
             t = time.time() - start_time
-            m1 = 10 * math.sin(t)
-            m2 = 10 * math.sin(t + 2.094)  # 120 degrees phase shift
-            m3 = 10 * math.sin(t + 4.188)  # 240 degrees phase shift
+            m1 = 30 * math.sin(t * 0.5)  # Slower frequency, 30 RPM amplitude
+            m2 = 30 * math.sin(t * 0.5 + 2.094)  # 120 degrees phase shift
+            m3 = 30 * math.sin(t * 0.5 + 4.188)  # 240 degrees phase shift
             
             if send_speeds(uart, m1, m2, m3, False):  # Silent mode for continuous test
                 counter += 1
             
-            time.sleep(0.1)  # 10Hz
+            # Print occasional status
+            if counter % 20 == 0:
+                print(f"  Status: {counter} commands sent, current speeds: M1={m1:.1f}, M2={m2:.1f}, M3={m3:.1f} RPM")
+            
+            time.sleep(0.2)  # 5Hz for better observation
         
-        print(f"Completed {counter} successful transmissions in 10 seconds")
+        print(f"Completed {counter} successful transmissions in 20 seconds")
         
         # Test 4: Stop all motors
         print("\nTest 4: Stopping all motors...")
-        for i in range(3):
+        for i in range(5):  # Send stop command multiple times
             send_speeds(uart, 0, 0, 0, True)
             time.sleep(0.5)
         
