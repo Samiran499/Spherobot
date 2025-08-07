@@ -1,6 +1,51 @@
-# Spherobot Main Computer Codes
+# Spherobot Main Compu### 3. Configure UART on Raspb### 5. Test Hardware Setup
+Check the hardware configuration:
+```bash
+python check_hardware.py
+```
 
-This directory contains the Python code that runs on the Raspberry Pi Zero 2W to control the Spherobot.
+### 6. Test UART Communication
+Before running the main program, test the UART communication:
+```bash
+python test_uart.py
+```
+
+### 7. Run the Main Program
+```bash
+python main.py
+```
+
+## Configuration
+
+All settings can be modified in `config.ini`:
+
+- **Orientation Server**: Change IP address, port, and timeout
+- **UART Settings**: Port, baud rate, timeout
+- **Control Loop**: Frequency and error handling
+- **Logging**: CSV filename, debug mode, log interval
+
+## File Description
+
+- `main.py`: Main control loop that receives orientation data and controls the motors
+- `config.ini`: Configuration file for all settings
+- `src/config_loader.py`: Configuration file loader utility
+- `src/kinematics_mapping.py`: Converts orientation data to motor speeds using kinematic equations
+- `src/speed_uart.py`: UART communication functions for sending data to the Pico
+- `test_uart.py`: Test script to verify UART communication
+- `check_hardware.py`: Hardware setup verification script
+- `requirements.txt`: Python dependenciesuses the hardware UART (`/dev/serial0`) to communicate with the RPi Pico. Make sure UART is enabled:
+
+1. Edit `/boot/config.txt` and add:
+   ```
+   enable_uart=1
+   dtoverlay=disable-bt
+   ```
+
+2. Edit `/boot/cmdline.txt` and remove any references to `console=serial0,115200`
+
+3. Reboot the Pi
+
+### 4. Hardware Connectionshis directory contains the Python code that runs on the Raspberry Pi Zero 2W to control the Spherobot.
 
 ## Setup Instructions
 
@@ -9,7 +54,18 @@ This directory contains the Python code that runs on the Raspberry Pi Zero 2W to
 pip install -r requirements.txt
 ```
 
-### 2. Configure UART on Raspberry Pi
+### 2. Configure Settings
+Edit `config.ini` to change the orientation server IP address and other settings:
+
+```ini
+[orientation_server]
+ip = 192.168.1.100  # Change this to your server IP
+port = 5000
+```
+
+You can also modify other settings like UART port, control frequency, etc. in this file.
+
+### 3. Configure UART on Raspberry Pi
 The code uses the hardware UART (`/dev/serial0`) to communicate with the RPi Pico. Make sure UART is enabled:
 
 1. Edit `/boot/config.txt` and add:
@@ -47,25 +103,34 @@ python main.py
 - `test_uart.py`: Test script to verify UART communication
 - `requirements.txt`: Python dependencies
 
-## Configuration
+## Quick IP Address Change
 
-### UART Settings
-- Port: `/dev/serial0` (default Pi UART)
-- Baud Rate: 115200
-- Timeout: 1 second
+To quickly change the orientation server IP address, edit the `config.ini` file:
 
-### Control Loop
-- Frequency: ~60Hz (16ms delay)
-- Data logging: Every 100 samples to CSV
+```ini
+[orientation_server]
+ip = YOUR_NEW_IP_ADDRESS
+```
 
-### Motor Speeds
+No code modification required!
+
+## Motor Communication
+
 Motor speeds are sent as comma-separated values in the format: `m1,m2,m3\n`
 Example: `10.50,-5.25,0.00\n`
 
+**Note**: The system currently only sends speeds to the Pico and does not receive feedback. This simplifies communication and reduces latency.
+
+## Control Loop Settings
+
+- Default Frequency: 60Hz (configurable in `config.ini`)
+- Request Timeout: 1 second (configurable)
+- Auto-stop: Motors stop after 5 consecutive failed requests (configurable)
+
 ## Debugging
 
-Set `debug_mode = True` in `main.py` to see detailed UART communication logs.
-Set `debug_mode = False` for production use to reduce console output.
+Set `debug_mode = true` in `config.ini` to see detailed UART communication logs.
+Set `debug_mode = false` for production use to reduce console output.
 
 ## Troubleshooting
 

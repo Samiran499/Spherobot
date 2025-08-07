@@ -28,29 +28,13 @@ def send_speeds(uart, m1, m2, m3, debug=False):
         return False
 
 def receive_speeds(uart, debug=False):
-    """Receive actual speeds from Pico"""
-    try:
-        if uart.in_waiting > 0:
-            response = uart.readline().decode('utf-8').strip()
-            if response:  # Only print non-empty responses
-                if debug:
-                    print(f"Received: {response}")
-                # Parse the response to get actual motor speeds
-                try:
-                    speeds = [float(x) for x in response.split(',')]
-                    if len(speeds) == 3:
-                        return speeds
-                    else:
-                        if debug:
-                            print(f"Warning: Expected 3 speeds, got {len(speeds)}")
-                except ValueError:
-                    if debug:
-                        print(f"Warning: Could not parse speeds from: {response}")
-            return response
-        return None
-    except Exception as e:
-        print(f"Error receiving speeds: {e}")
-        return None
+    """
+    Placeholder function for future implementation
+    Currently not used as per requirements
+    """
+    # This function is kept for future use but currently does nothing
+    # as receiving speeds from Pico is not needed right now
+    pass
 
 def check_uart_connection(uart):
     """Check if UART connection is still active"""

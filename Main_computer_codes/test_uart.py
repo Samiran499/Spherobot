@@ -6,7 +6,7 @@ This script sends test speed commands and monitors responses
 
 import time
 import math
-from src.speed_uart import setup_uart, send_speeds, receive_speeds, close_uart
+from src.speed_uart import setup_uart, send_speeds, close_uart
 
 # UART Configuration
 UART_PORT = "/dev/serial0"
@@ -34,10 +34,10 @@ def test_uart_communication():
         print("\nTest 1: Sending zero speeds...")
         for i in range(3):
             if send_speeds(uart, 0, 0, 0, True):
+                print(f"  Successfully sent zero speeds (attempt {i+1})")
                 time.sleep(0.5)
-                response = receive_speeds(uart, True)
-                if response:
-                    print(f"  Response {i+1}: {response}")
+            else:
+                print(f"  Failed to send zero speeds (attempt {i+1})")
             time.sleep(1)
         
         # Test 2: Send different speeds
@@ -53,10 +53,10 @@ def test_uart_communication():
         for i, (m1, m2, m3) in enumerate(test_speeds):
             print(f"  Sending speeds: M1={m1}, M2={m2}, M3={m3}")
             if send_speeds(uart, m1, m2, m3, True):
+                print(f"  Successfully sent test speeds")
                 time.sleep(0.5)
-                response = receive_speeds(uart, True)
-                if response:
-                    print(f"  Response: {response}")
+            else:
+                print(f"  Failed to send test speeds")
             time.sleep(2)
         
         # Test 3: Continuous communication test
@@ -71,8 +71,7 @@ def test_uart_communication():
             m2 = 10 * math.sin(t + 2.094)  # 120 degrees phase shift
             m3 = 10 * math.sin(t + 4.188)  # 240 degrees phase shift
             
-            if send_speeds(uart, m1, m2, m3, True):
-                response = receive_speeds(uart, True)
+            if send_speeds(uart, m1, m2, m3, False):  # Silent mode for continuous test
                 counter += 1
             
             time.sleep(0.1)  # 10Hz

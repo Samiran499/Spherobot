@@ -3,21 +3,31 @@ import requests
 import serial
 import time
 from src.kinematics_mapping import map_speed
-from src.speed_uart import setup_uart, send_speeds, receive_speeds, check_uart_connection, close_uart
+from src.speed_uart import setup_uart, send_speeds, check_uart_connection, close_uart
+from src.config_loader import load_config, get_orientation_endpoint, print_config
 
-# UART Configuration
-UART_PORT = "/dev/serial0"  # Default UART port on Pi Zero
-BAUD_RATE = 115200
-TIMEOUT = 1
+# Load configuration
+config = load_config()
+
+# Extract configuration values
+ORIENTATION_ENDPOINT = get_orientation_endpoint(config)
+UART_PORT = config.get('uart', 'port')
+BAUD_RATE = config.getint('uart', 'baud_rate')
+TIMEOUT = config.getfloat('uart', 'timeout')
+CONTROL_FREQUENCY = config.getint('control', 'frequency')
+REQUEST_TIMEOUT = config.getfloat('orientation_server', 'timeout')
+MAX_FAILED_REQUESTS = config.getint('control', 'max_failed_requests')
+LOG_INTERVAL = config.getint('logging', 'log_interval')
+DEBUG_MODE = config.getboolean('logging', 'debug_mode')
+CSV_FILENAME = config.get('logging', 'csv_filename')
 
 buffer = []
-log_interval = 100  # How many samples before writing to CSV
-debug_mode = True  # Set to False to reduce console output
+log_interval = LOG_INTERVAL
+debug_mode = DEBUG_MODE
 
 def main():
     print("Starting Spherobot Main Computer...")
-    print(f"UART Port: {UART_PORT}")
-    print(f"Baud Rate: {BAUD_RATE}")
+    print_config(config)
     
     uart = setup_uart(UART_PORT, BAUD_RATE, TIMEOUT)
     if uart is None:
@@ -37,13 +47,13 @@ def main():
     print("Starting main control loop...")
     
     failed_requests = 0
-    max_failed_requests = 5
+    max_failed_requests = MAX_FAILED_REQUESTS
 
     try:
         while True:
             # Get orientation data
             try:
-                r = requests.get("http://192.168.31.244:5000/orientation", timeout=1)
+                r = requests.get(ORIENTATION_ENDPOINT, timeout=REQUEST_TIMEOUT)
                 data = r.json()
 
                 roll_rate = data['roll']
@@ -65,11 +75,10 @@ def main():
 
                 # Send to Pico
                 if send_speeds(uart, m1, m2, m3, debug_mode):
-                    # Receive from Pico (non-blocking)
-                    actual_speeds = receive_speeds(uart, debug_mode)
+                    if debug_mode:
+                        print(f"Successfully sent speeds: M1={m1:.2f}, M2={m2:.2f}, M3={m3:.2f}")
                 else:
                     print("Failed to send speeds to Pico")
-                    actual_speeds = None
 
                 # Save to buffer
                 buffer.append({
@@ -79,8 +88,7 @@ def main():
                     "yaw": data["yaw"],
                     "m1_speed": m1,
                     "m2_speed": m2,
-                    "m3_speed": m3,
-                    "actual_speeds": actual_speeds
+                    "m3_speed": m3
                 })
                 
                 # Reset failed request counter on successful operation
@@ -88,14 +96,14 @@ def main():
 
                 # Periodically dump to CSV
                 if len(buffer) >= log_interval:
-                    with open("orientation_log.csv", "a", newline='') as f:
+                    with open(CSV_FILENAME, "a", newline='') as f:
                         writer = csv.DictWriter(f, fieldnames=buffer[0].keys())
                         if f.tell() == 0:  # Write header if file is empty
                             writer.writeheader()
                         writer.writerows(buffer)
                     buffer.clear()
 
-                time.sleep(0.016)  # ~60Hz polling
+                time.sleep(1.0 / CONTROL_FREQUENCY)  # Control loop frequency
 
             except requests.exceptions.RequestException as e:
                 print(f"HTTP request error: {e}")
